@@ -52,7 +52,6 @@ public class SensorDigitalTouch extends LinearOpMode {
 
         // get a reference to our touchSensor object.
         digitalTouch = hardwareMap.get(DigitalChannel.class, "digitalTouch");
-
         digitalTouch.setMode(DigitalChannel.Mode.INPUT);
         telemetry.addData("DigitalTouchSensorExample", "Press start to continue...");
         telemetry.update();
@@ -60,7 +59,7 @@ public class SensorDigitalTouch extends LinearOpMode {
         // wait for the start button to be pressed.
         waitForStart();
 
-        // while the OpMode is active, loop and read the digital channel.
+        //], the OpMode is active, loop and read the digital channel.
         // Note we use opModeIsActive() as our loop condition because it is an interruptible method.
         while (opModeIsActive()) {
 
