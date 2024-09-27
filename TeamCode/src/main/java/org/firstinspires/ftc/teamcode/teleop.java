@@ -4,14 +4,18 @@ import android.graphics.Path;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.drivetrain;
 import org.firstinspires.ftc.teamcode.GamepadStates;
 
@@ -19,8 +23,12 @@ import org.firstinspires.ftc.teamcode.GamepadStates;
 public class teleop extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
+        ColorSensor Color;
         TouchSensor Touch;
+        DistanceSensor Distance;
+        Color = hardwareMap.get(ColorSensor.class, "SensorColor");
         Touch = hardwareMap.get(TouchSensor.class, "Touch");
+        Distance = hardwareMap.get(DistanceSensor.class, "Distance");
 
         double speed = .5;
 
@@ -77,8 +85,14 @@ public class teleop extends LinearOpMode {
                 Drive.servoStop();
             }
 
-            telemetry.addData("Servo power: ", +Drive.testing.getPower());
-            telemetry.addData("Button ", +Touch.getValue());
+//            telemetry.addData("Red  ", Color.red());
+//            telemetry.addData("Green", Color.green());
+//            telemetry.addData("Blue ", Color.blue());
+
+//            telemetry.addData("Servo power: ", +Drive.testing.getPower());
+//            telemetry.addData("Button ", +Touch.getValue());
+
+            telemetry.addData("range", String.format("% 01f cm", Distance.getDistance(DistanceUnit.CM)));
             telemetry.update();
         }
     }
