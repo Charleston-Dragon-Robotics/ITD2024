@@ -23,21 +23,23 @@ import org.firstinspires.ftc.teamcode.GamepadStates;
 public class teleop extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        ColorSensor Color;
-        TouchSensor Touch;
-        DistanceSensor Distance;
-        Color = hardwareMap.get(ColorSensor.class, "SensorColor");
-        Touch = hardwareMap.get(TouchSensor.class, "Touch");
-        Distance = hardwareMap.get(DistanceSensor.class, "Distance");
+//        ColorSensor Color;
+//        TouchSensor Touch;
+//        DistanceSensor Distance;
+//        Color = hardwareMap.get(ColorSensor.class, "SensorColor");
+//        Touch = hardwareMap.get(TouchSensor.class, "Touch");
+//        Distance = hardwareMap.get(DistanceSensor.class, "Distance");
 
         double speed = .5;
 
         drivetrain Drive = new drivetrain();
+        intake intake = new intake();
 
         GamepadStates newGamePad1 = new GamepadStates(gamepad1);
         GamepadStates newGamePad2 = new GamepadStates(gamepad2);
 
         Drive.init(this);
+        intake.init(this);
 
         waitForStart();
 
@@ -79,10 +81,10 @@ public class teleop extends LinearOpMode {
 //            }
 
 
-            if (!Touch.isPressed()) {
-                Drive.servoForward();
-            } else {
-                Drive.servoStop();
+            if (newGamePad2.a.released) {
+                Drive.servoOpen();
+            } else if (newGamePad2.b.released){
+                Drive.servoClose();
             }
 
 //            telemetry.addData("Red  ", Color.red());
@@ -91,9 +93,17 @@ public class teleop extends LinearOpMode {
 
 //            telemetry.addData("Servo power: ", +Drive.testing.getPower());
 //            telemetry.addData("Button ", +Touch.getValue());
+//
+//            telemetry.addData("range", String.format("% 01f cm", Distance.getDistance(DistanceUnit.CM)));
+//            telemetry.update();
 
-            telemetry.addData("range", String.format("% 01f cm", Distance.getDistance(DistanceUnit.CM)));
-            telemetry.update();
+            if (newGamePad2.dpad_down.state) {
+                intake.intakeIn();
+            } else if (newGamePad2.dpad_up.state) {
+              intake.intakeOut();
+            }else{
+                intake.intakeSTOP();
+            }
         }
     }
 }
