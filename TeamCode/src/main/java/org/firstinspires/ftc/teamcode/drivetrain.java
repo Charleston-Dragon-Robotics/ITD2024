@@ -33,7 +33,6 @@ public class drivetrain {
 
     IMU imu;
 
-
     public drivetrain() {
 
     }
@@ -135,18 +134,21 @@ public class drivetrain {
         return pulses;
     }
 
-    public void servoForward() {
-        testing.setPower(1);
-        testing1.setPower(1);
+    public void servoForward(double speed) {
+        testing.setPower(speed);
+        testing1.setPower(speed);
     }
 
-    public void servoRevers() {
-        testing.setPower(-1);
-        testing1.setPower(1);
+    public void servoRevers(double speed) {
+        testing.setPower(speed);
+        testing1.setPower(speed);
     }
 
     public void servoStop() {
         testing.setPower(0);
         testing1.setPower(0);
     }
+
+
+
 }

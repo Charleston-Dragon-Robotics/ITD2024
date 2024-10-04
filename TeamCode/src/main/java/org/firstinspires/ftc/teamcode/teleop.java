@@ -25,10 +25,10 @@ public class teleop extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 //        ColorSensor Color;
 //        TouchSensor Touch;
-//        DistanceSensor Distance;
+        DistanceSensor Distance;
 //        Color = hardwareMap.get(ColorSensor.class, "SensorColor");
 //        Touch = hardwareMap.get(TouchSensor.class, "Touch");
-//        Distance = hardwareMap.get(DistanceSensor.class, "Distance");
+        Distance = hardwareMap.get(DistanceSensor.class, "Distance");
 
         double speed = .5;
 
@@ -81,11 +81,28 @@ public class teleop extends LinearOpMode {
 //            }
 
 
-            if (newGamePad2.a.released) {
-                Drive.servoOpen();
-            } else if (newGamePad2.b.released){
-                Drive.servoClose();
+            double DistanceFrom = Distance.getDistance(DistanceUnit.CM);
+            telemetry.addData("range", String.format("% 01f cm", DistanceFrom));
+            telemetry.update();
+            //Adjustable bast off of distence of iteams
+            if(DistanceFrom >= 7){
+                Drive.servoStop();
+            }  else if (DistanceFrom <=7){
+                Drive.servoForward(0.1428);
+            }  else if (DistanceFrom <=6){
+                Drive.servoForward(0.2857);
+            } else if (DistanceFrom <=5){
+                Drive.servoForward(0.4285);
+            }else if (DistanceFrom <=4){
+                Drive.servoForward(0.5714);
+            }else if (DistanceFrom <=3){
+                Drive.servoForward(0.7142);
+            }else if (DistanceFrom <=2) {
+                Drive.servoForward(0.8571);
+            }else  {
+                Drive.servoForward(1);
             }
+
 
 //            telemetry.addData("Red  ", Color.red());
 //            telemetry.addData("Green", Color.green());
